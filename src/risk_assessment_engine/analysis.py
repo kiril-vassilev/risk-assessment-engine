@@ -17,11 +17,6 @@ from .models import (
     SourceRecord,
 )
 
-
-class AnalysisClient(Protocol):
-    def analyze(self, prompt: str) -> AirlineAnalysis: ...
-
-
 def build_airline_prompt(assessment_input: AssessmentInput, sources: list[SourceRecord]) -> str:
     evidence = [source.model_dump(mode="json") for source in sources]
     return (
@@ -31,10 +26,6 @@ def build_airline_prompt(assessment_input: AssessmentInput, sources: list[Source
         f"Airline: {assessment_input.airline}\nAircraft MSN (pending aircraft research): {assessment_input.msn}\n"
         f"Evidence JSON:\n{json.dumps(evidence, indent=2)}"
     )
-
-
-# Backward-compatible alias
-build_prompt = build_airline_prompt
 
 
 def build_financial_prompt(assessment_input: AssessmentInput, sources: list[SourceRecord]) -> str:
@@ -249,7 +240,7 @@ class AzureAnalysisClient:
         )
         self._deployment = settings.azure_deployment
 
-    def analyze(self, prompt: str) -> AirlineAnalysis:
+    def analyze_airline(self, prompt: str) -> AirlineAnalysis:
         response = self._client.beta.chat.completions.parse(
             model=self._deployment,
             temperature=0,

@@ -34,24 +34,19 @@ def _section(title: str, analysis: SectionAnalysis, sources: list[SourceRecord])
     return "\n".join(lines)
 
 
-def render_airline_report(assessment_input: AssessmentInput, analysis: AirlineAnalysis, sources: list[SourceRecord]) -> str:
+def render_airline_report(
+        assessment_input: AssessmentInput, 
+        analysis: AirlineAnalysis, 
+        sources: list[SourceRecord]) -> str:
     sections = [
         f"# Step 1 Airline Risk Research: {assessment_input.airline}",
         f"Aircraft MSN: {assessment_input.msn} (aircraft analysis pending)",
         "",
         _section("1. Executive Summary", analysis.executive_summary, sources),
-        _section("2. Financial Risks", analysis.financial_risks, sources),
-        _section("3. Operational Risks", analysis.operational_risks, sources),
-        _section("4. Market and Competitive Risks", analysis.market_risks, sources),
         "## Scope Deferred",
-        "Aircraft Risk, Red Flags, Assessment View, and Appendix A Country Risk require later research increments and are unavailable in Step 1.",
+        "Financial Risk, Operational Risk, Market and Competitive Risk, Aircraft Risk, Red Flags, Assessment View, and Appendix A Country Risk require later research increments and are unavailable in Step 1.",
     ]
     return "\n\n".join(sections) + "\n"
-
-
-# Backward-compatible alias
-render_report = render_airline_report
-
 
 def render_financial_report(
     assessment_input: AssessmentInput,

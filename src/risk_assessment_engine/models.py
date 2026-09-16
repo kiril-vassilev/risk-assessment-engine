@@ -61,9 +61,6 @@ class SectionAnalysis(BaseModel):
 
 class AirlineAnalysis(BaseModel):
     executive_summary: SectionAnalysis
-    financial_risks: SectionAnalysis
-    operational_risks: SectionAnalysis
-    market_risks: SectionAnalysis
 
 
 class FinancialAnalysis(BaseModel):

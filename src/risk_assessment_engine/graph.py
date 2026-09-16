@@ -5,7 +5,6 @@ from typing import Any
 from langgraph.graph import END, START, StateGraph
 
 from .analysis import (
-    AnalysisClient,
     build_aircraft_prompt,
     build_assessment_view_prompt,
     build_country_prompt,
@@ -44,7 +43,7 @@ from .research import (
 )
 
 
-def build_airline_graph(search_client: Any, analysis_client: AnalysisClient):
+def build_airline_graph(search_client: Any, analysis_client: Any):
     def validated_input(state: GraphState) -> AssessmentInput:
         value = state.get("assessment_input")
         if not isinstance(value, AssessmentInput):
@@ -60,7 +59,7 @@ def build_airline_graph(search_client: Any, analysis_client: AnalysisClient):
 
     def analyze_airline(state: GraphState) -> dict:
         prompt = build_airline_prompt(validated_input(state), state.get("sources", []))
-        return {"analysis": analysis_client.analyze(prompt)}
+        return {"analysis": analysis_client.analyze_airline(prompt)}
 
     def render(state: GraphState) -> dict:
         assessment_input = validated_input(state)

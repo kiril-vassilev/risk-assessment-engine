@@ -15,7 +15,7 @@ class FakeSearch:
 
 
 class FakeAnalysis:
-    def analyze(self, prompt):
+    def analyze_airline(self, prompt):
         assert "Example" in prompt
         return make_analysis()
 
@@ -25,9 +25,6 @@ def make_analysis():
     section = SectionAnalysis(summary="Evidence was reviewed.", findings=[finding])
     return AirlineAnalysis(
         executive_summary=section,
-        financial_risks=section,
-        operational_risks=section,
-        market_risks=section,
     )
 
 
@@ -53,7 +50,7 @@ def test_sources_are_deduplicated():
     assert sources[0].url == "https://example.com/report"
 
 
-def test_renderer_contains_required_step1_sections_and_sources():
+def test_renderer_contains_required_sections_and_sources():
     source = SourceRecord(
         source_id="S001",
         url="https://example.com/report",
@@ -65,7 +62,7 @@ def test_renderer_contains_required_step1_sections_and_sources():
     )
     report = render_airline_report(AssessmentInput(airline="Example", msn="123", aircraft_variant="A320-214"), make_analysis(), [source])
     assert "## 1. Executive Summary" in report
-    assert "## 4. Market and Competitive Risks" in report
+    assert "Financial Risk" in report
     assert "### Sources" in report
     assert "S001" in report
     assert "aircraft analysis pending" in report
