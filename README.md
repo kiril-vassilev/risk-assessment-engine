@@ -23,6 +23,7 @@ Copy-Item .env.example .env
 ```
 
 Set your `TAVILY_API_KEY` and Azure OpenAI settings in `.env`.
+Run the install command again after dependencies change; it installs packages into the project's `venv`.
 
 ## Usage
 
@@ -30,6 +31,12 @@ Generate the full **Risk Assessment Report** (default workflow):
 
 ```powershell
 & .\venv\Scripts\python.exe -m risk_assessment_engine.cli --airline "example-airline" --msn "12345" --aircraft-variant "A320-214" --jurisdiction "United States" --output report.txt
+```
+
+Convert a text report to Word using the same environment:
+
+```powershell
+& .\venv\Scripts\python.exe -m risk_assessment_engine.cli export-word report.txt
 ```
 
 ### Individual Workflows

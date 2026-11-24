@@ -16,6 +16,7 @@ ENV/
 
 # Generated reports
 report*.txt
+report*.docx
 
 # Local assignment files
 /assignment/
